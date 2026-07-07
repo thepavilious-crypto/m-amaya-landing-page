@@ -47,10 +47,14 @@
 html {
   scroll-behavior: smooth;
   background: var(--black);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   color: var(--ink);
   background: var(--soft);
@@ -80,7 +84,8 @@ select {
 }
 
 .container {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1180px, calc(100vw - 40px));
+  max-width: calc(100vw - 40px);
   margin: 0 auto;
 }
 
@@ -391,7 +396,7 @@ h3 {
 }
 
 .section-head {
-  max-width: 940px;
+  max-width: min(940px, 100%);
   margin-bottom: clamp(30px, 5vw, 58px);
 }
 
@@ -410,6 +415,9 @@ h3 {
 .highlight-track,
 .layout-track {
   display: grid;
+  width: 100%;
+  max-width: 100vw;
+  min-width: 0;
   grid-auto-flow: column;
   grid-auto-columns: minmax(320px, 36vw);
   gap: 18px;
@@ -863,7 +871,8 @@ body.motion-enhanced .reveal {
   }
 
   .container {
-    width: min(100% - 28px, 1180px);
+    width: calc(100vw - 28px);
+    max-width: calc(100vw - 28px);
   }
 
   .global-actions a:not(.pill-link) {
