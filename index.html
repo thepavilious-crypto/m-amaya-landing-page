@@ -424,6 +424,7 @@ h3 {
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(20px, calc((100vw - 1180px) / 2));
   padding: 0 max(20px, calc((100vw - 1180px) / 2)) 18px;
   scrollbar-width: thin;
 }
@@ -790,17 +791,19 @@ h3 {
 
 .floor-card {
   display: grid;
-  grid-template-rows: minmax(300px, 1fr) auto;
+  grid-template-rows: minmax(340px, 1fr) auto;
   min-height: 620px;
   border: 1px solid var(--line);
   background: #fff;
 }
 
 .floor-card img {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: 26px;
+  padding: clamp(34px, 4vw, 54px);
   object-fit: contain;
+  object-position: center;
   background: #fff;
 }
 
@@ -1053,6 +1056,28 @@ body.motion-enhanced .hero-cta {
     position: static;
   }
 
+  .dark-chapter {
+    min-height: auto;
+    padding-bottom: clamp(76px, 10vw, 118px);
+  }
+
+  .dark-chapter h2 {
+    font-size: clamp(2.2rem, 7.2vw, 4.25rem);
+    line-height: 1.02;
+   }
+
+  .chapter-visual {
+    align-self: stretch;
+    gap: 18px;
+    transform: none !important;
+  }
+
+  .floating-stat,
+  body.motion-enhanced .floating-stat {
+    min-height: 128px;
+    transform: none !important;
+  }
+
   .highlight-track,
   .layout-track {
     grid-auto-columns: minmax(300px, 74vw);
@@ -1144,6 +1169,7 @@ body.motion-enhanced .hero-cta {
   .layout-track {
     grid-auto-columns: minmax(282px, 88vw);
     padding-inline: 14px;
+    scroll-padding-inline: 14px;
   }
 
   .highlight-card {
@@ -1151,7 +1177,7 @@ body.motion-enhanced .hero-cta {
   }
 
   .floor-card {
-    min-height: 560px;
+    min-height: auto;
   }
 
   .section,
@@ -1243,13 +1269,13 @@ body.motion-enhanced .hero-cta {
   }
 
   .floor-card {
-    grid-template-rows: 320px auto;
+    grid-template-rows: 360px auto;
     min-height: auto;
     background: #fff;
   }
 
   .floor-card img {
-    padding: 20px;
+    padding: 32px;
   }
 
   .showcase-frame,
@@ -1748,18 +1774,20 @@ function initMotion() {
     });
   });
 
-  window.gsap.utils.toArray(".floating-stat").forEach((item, index) => {
-    window.gsap.to(item, {
-      y: index % 2 === 0 ? -34 : 34,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".dark-chapter",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
+  if (window.matchMedia("(min-width: 981px)").matches) {
+    window.gsap.utils.toArray(".floating-stat").forEach((item, index) => {
+      window.gsap.to(item, {
+        y: index % 2 === 0 ? -34 : 34,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".dark-chapter",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
     });
-  });
+  }
 }
 
 function handleLeadSubmission(event) {
