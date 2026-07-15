@@ -2376,6 +2376,8 @@ body.motion-enhanced .hero-cta {
     <script>
 const WHATSAPP_NUMBER = "60105630916";
 const WHATSAPP_MESSAGE = "Hi Almes, I'm interested in the Batu Maung residence near Bayan Lepas FIZ. Please send me the current price and available units.";
+const LEAD_EMAIL_ENDPOINT = "https://formsubmit.co/ajax/thepavilious@gmail.com";
+const LEAD_EMAIL_SUBJECT = "New M Amaya lead from penangamaya.com";
 const WHATSAPP_SUBMIT_MESSAGES = {
   package: "Hi Almes, I've submitted the M Amaya form. Please send me the latest package and available units.",
   loan: "Hi Almes, I've submitted the M Amaya form. Please help me check loan eligibility.",
@@ -2395,6 +2397,33 @@ document.addEventListener("DOMContentLoaded", () => {
 function trackMetaPixelEvent(eventName, params = {}) {
   if (typeof window.fbq !== "function") return;
   window.fbq("track", eventName, params);
+}
+
+function sendLeadEmail(leadData) {
+  const payload = {
+    _subject: LEAD_EMAIL_SUBJECT,
+    _template: "table",
+    _captcha: "false",
+    project: leadData.project,
+    name: leadData.name,
+    phone: leadData.phone,
+    preferredLayout: leadData.preferredLayout,
+    buyingPurpose: leadData.buyingPurpose,
+    bestViewingTime: leadData.bestViewingTime,
+    source: leadData.source,
+    submittedAt: leadData.submittedAt,
+  };
+
+  return fetch(LEAD_EMAIL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }).catch((error) => {
+    console.warn("Lead email delivery failed:", error);
+  });
 }
 
 function wireWhatsAppLinks() {
@@ -2633,6 +2662,7 @@ function handleLeadSubmission(event) {
 
   submitButton.disabled = true;
   console.log("M Amaya lead submission:", leadData);
+  sendLeadEmail(leadData);
 
   window.setTimeout(() => {
     trackMetaPixelEvent("Lead", {
