@@ -1991,6 +1991,16 @@ body.motion-enhanced .hero-cta {
               </select>
               <span class="field-error" aria-live="polite"></span>
             </label>
+            <label>
+              Best Viewing Time
+              <select name="bestViewingTime" required>
+                <option value="">Select viewing time</option>
+                <option>Weekday</option>
+                <option>Weekend</option>
+                <option>Weekday (after work)</option>
+              </select>
+              <span class="field-error" aria-live="polite"></span>
+            </label>
             <button class="primary-cta submit-btn" type="submit">Send Me Price Breakdown</button>
             <p class="micro-trust">No spam. Your details are used only for project updates and viewing arrangements. Response via WhatsApp within business hours.</p>
             <div class="form-success" role="status" aria-live="polite" hidden>
@@ -2265,6 +2275,16 @@ body.motion-enhanced .hero-cta {
                 <option>Investment</option>
                 <option>Upgrade</option>
                 <option>Not sure yet</option>
+              </select>
+              <span class="field-error" aria-live="polite"></span>
+            </label>
+            <label>
+              Best Viewing Time
+              <select name="bestViewingTime" required>
+                <option value="">Select viewing time</option>
+                <option>Weekday</option>
+                <option>Weekend</option>
+                <option>Weekday (after work)</option>
               </select>
               <span class="field-error" aria-live="polite"></span>
             </label>
@@ -2565,6 +2585,7 @@ function handleLeadSubmission(event) {
     phone: form.phone.value.trim(),
     preferredLayout: form.preferredLayout?.value || "Not selected",
     buyingPurpose: form.buyingPurpose.value,
+    bestViewingTime: form.bestViewingTime.value,
     submittedAt: new Date().toISOString(),
     source: "Landing Page",
   };
