@@ -2384,6 +2384,7 @@ const WHATSAPP_SUBMIT_MESSAGES = {
 
 document.addEventListener("DOMContentLoaded", () => {
   wireWhatsAppLinks();
+  wireMetaPixelContactTracking();
   wireLayoutButtons();
   wireSmoothScroll();
   wireMobileCta();
@@ -2391,12 +2392,37 @@ document.addEventListener("DOMContentLoaded", () => {
   initMotion();
 });
 
+function trackMetaPixelEvent(eventName, params = {}) {
+  if (typeof window.fbq !== "function") return;
+  window.fbq("track", eventName, params);
+}
+
 function wireWhatsAppLinks() {
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
   document.querySelectorAll("[data-whatsapp-link]").forEach((link) => {
     link.href = whatsappUrl;
     link.target = "_blank";
     link.rel = "noopener";
+  });
+}
+
+function wireMetaPixelContactTracking() {
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a");
+    if (!link) return;
+
+    const href = link.getAttribute("href") || "";
+    const isWhatsAppClick =
+      link.hasAttribute("data-whatsapp-link") ||
+      link.hasAttribute("data-whatsapp-submit-link") ||
+      href.includes("wa.me/") ||
+      href.includes("whatsapp");
+
+    if (isWhatsAppClick) {
+      trackMetaPixelEvent("Contact", {
+        content_name: "M Amaya WhatsApp",
+      });
+    }
   });
 }
 
@@ -2609,6 +2635,9 @@ function handleLeadSubmission(event) {
   console.log("M Amaya lead submission:", leadData);
 
   window.setTimeout(() => {
+    trackMetaPixelEvent("Lead", {
+      content_name: "M Amaya Lead Form",
+    });
     form.reset();
     submitButton.disabled = false;
     whatsappSubmitLinks.forEach((link) => {
