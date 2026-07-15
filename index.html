@@ -1306,6 +1306,68 @@ body.motion-enhanced .floating-stat {
   font-weight: 700;
 }
 
+.form-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0 !important;
+}
+
+.consent-field {
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px !important;
+  font-size: 0.86rem;
+  font-weight: 700 !important;
+  line-height: 1.5;
+}
+
+.consent-field input {
+  width: 18px;
+  min-height: 18px;
+  margin-top: 2px;
+  padding: 0;
+  accent-color: var(--gold);
+}
+
+.consent-field .field-error {
+  grid-column: 1 / -1;
+}
+
+.turnstile-field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.turnstile-widget {
+  min-height: 65px;
+}
+
+.form-error {
+  padding: 12px 14px;
+  border: 1px solid rgba(180, 35, 61, 0.24);
+  border-radius: var(--radius);
+  color: #8f1d32;
+  background: #fff1f3;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.form-error[hidden] {
+  display: none;
+}
+
+.submit-btn:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
 .submit-btn {
   width: 100%;
   border: 0;
@@ -1985,6 +2047,7 @@ body.motion-enhanced .hero-cta {
             </div>
           </div>
           <form class="lead-form compact-form reveal" novalidate onsubmit="handleLeadSubmission(event)">
+            <input class="form-honeypot" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <label>
               Full Name
               <input name="fullName" type="text" autocomplete="name" required />
@@ -2016,8 +2079,18 @@ body.motion-enhanced .hero-cta {
               </select>
               <span class="field-error" aria-live="polite"></span>
             </label>
+            <label class="consent-field">
+              <input name="consent" type="checkbox" required />
+              <span>I agree to be contacted by Almes about M Amaya pricing, available units, financing and viewing arrangements.</span>
+              <span class="field-error" aria-live="polite"></span>
+            </label>
+            <div class="turnstile-field">
+              <div class="turnstile-widget" data-turnstile-widget></div>
+              <span class="field-error" data-turnstile-error aria-live="polite"></span>
+            </div>
             <button class="primary-cta submit-btn" type="submit">Send Me Price Breakdown</button>
             <p class="micro-trust">No spam. Your details are used only for project updates and viewing arrangements. Response via WhatsApp within business hours.</p>
+            <div class="form-error" role="alert" tabindex="-1" hidden></div>
             <div class="form-success" role="status" aria-live="polite" hidden>
               <strong>Thank you. Your request has been received.</strong>
               <span>What would you like next?</span>
@@ -2259,6 +2332,7 @@ body.motion-enhanced .hero-cta {
             <a class="secondary-cta dark" data-whatsapp-link href="https://wa.me/60105630916">WhatsApp Almes</a>
           </div>
           <form class="lead-form reveal" novalidate onsubmit="handleLeadSubmission(event)">
+            <input class="form-honeypot" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <label>
               Full Name
               <input name="fullName" type="text" autocomplete="name" required />
@@ -2303,8 +2377,18 @@ body.motion-enhanced .hero-cta {
               </select>
               <span class="field-error" aria-live="polite"></span>
             </label>
+            <label class="consent-field">
+              <input name="consent" type="checkbox" required />
+              <span>I agree to be contacted by Almes about M Amaya pricing, available units, financing and viewing arrangements.</span>
+              <span class="field-error" aria-live="polite"></span>
+            </label>
+            <div class="turnstile-field">
+              <div class="turnstile-widget" data-turnstile-widget></div>
+              <span class="field-error" data-turnstile-error aria-live="polite"></span>
+            </div>
             <button class="primary-cta submit-btn" type="submit">Get Latest Package</button>
             <p class="micro-trust">No spam. Your details are used only for project updates and viewing arrangements. Response via WhatsApp within business hours.</p>
+            <div class="form-error" role="alert" tabindex="-1" hidden></div>
             <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
               <strong>Thank you. Your request has been received.</strong>
               <span>What would you like next?</span>
@@ -2373,11 +2457,17 @@ body.motion-enhanced .hero-cta {
     <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=initializeTurnstile"></script>
     <script>
 const WHATSAPP_NUMBER = "60105630916";
 const WHATSAPP_MESSAGE = "Hi Almes, I'm interested in the Batu Maung residence near Bayan Lepas FIZ. Please send me the current price and available units.";
-const LEAD_EMAIL_ENDPOINT = "https://formsubmit.co/ajax/thepavilious@gmail.com";
-const LEAD_EMAIL_SUBJECT = "New M Amaya lead from penangamaya.com";
+const PROPERTYMART_API_BASE = "https://romana-unsilly-cecila.ngrok-free.dev/api/manage/v1";
+const PROPERTYMART_FORM_KEY = "pm_form_jbnek9oZJuT1Le8R4jVEX1yoHac96BRMsNsqV2OsBHtVW7U3";
+const TURNSTILE_SITE_KEY = "0x4AAAAAAD2jhLTe11eT_diG";
+const PROPERTYMART_PROJECT_ID = 54;
+const CONSENT_TEXT = "I agree to be contacted by Almes about M Amaya pricing, available units, financing and viewing arrangements.";
+const CONSENT_VERSION = "2026-07";
+const TURNSTILE_WIDGETS = new WeakMap();
 const WHATSAPP_SUBMIT_MESSAGES = {
   package: "Hi Almes, I've submitted the M Amaya form. Please send me the latest package and available units.",
   loan: "Hi Almes, I've submitted the M Amaya form. Please help me check loan eligibility.",
@@ -2399,30 +2489,34 @@ function trackMetaPixelEvent(eventName, params = {}) {
   window.fbq("track", eventName, params);
 }
 
-function sendLeadEmail(leadData) {
-  const payload = {
-    _subject: LEAD_EMAIL_SUBJECT,
-    _template: "table",
-    _captcha: "false",
-    project: leadData.project,
-    name: leadData.name,
-    phone: leadData.phone,
-    preferredLayout: leadData.preferredLayout,
-    buyingPurpose: leadData.buyingPurpose,
-    bestViewingTime: leadData.bestViewingTime,
-    source: leadData.source,
-    submittedAt: leadData.submittedAt,
-  };
+function initializeTurnstile() {
+  document.querySelectorAll("[data-turnstile-widget]").forEach((container) => {
+    const form = container.closest("form");
+    if (!form || TURNSTILE_WIDGETS.has(form)) return;
 
-  return fetch(LEAD_EMAIL_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  }).catch((error) => {
-    console.warn("Lead email delivery failed:", error);
+    const widgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: "light",
+      size: "flexible",
+      callback: (token) => {
+        form.dataset.turnstileToken = token;
+        const error = form.querySelector("[data-turnstile-error]");
+        if (error) error.textContent = "";
+      },
+      "error-callback": () => {
+        delete form.dataset.turnstileToken;
+        const error = form.querySelector("[data-turnstile-error]");
+        if (error) error.textContent = "Human verification could not load. Please refresh and try again.";
+        return true;
+      },
+      "expired-callback": () => {
+        delete form.dataset.turnstileToken;
+        const error = form.querySelector("[data-turnstile-error]");
+        if (error) error.textContent = "Verification expired. Please complete it again.";
+      },
+    });
+
+    TURNSTILE_WIDGETS.set(form, widgetId);
   });
 }
 
@@ -2611,22 +2705,30 @@ function initMotion() {
   window.gsap.set(".floating-stat", { clearProps: "transform" });
 }
 
-function handleLeadSubmission(event) {
+async function handleLeadSubmission(event) {
   event.preventDefault();
 
   const form = event.target;
+  if (form.dataset.submitting === "true") return;
+
   const requiredFields = form.querySelectorAll("[required]");
   const successMessage = form.querySelector(".form-success");
+  const formError = form.querySelector(".form-error");
+  const turnstileError = form.querySelector("[data-turnstile-error]");
   const whatsappSubmitLinks = form.querySelectorAll("[data-whatsapp-submit-link]");
   const submitButton = form.querySelector('button[type="submit"]');
   let isValid = true;
 
   if (successMessage) successMessage.hidden = true;
+  if (formError) {
+    formError.hidden = true;
+    formError.textContent = "";
+  }
 
   requiredFields.forEach((field) => {
     const label = field.closest("label");
     const error = label?.querySelector(".field-error");
-    const value = field.value.trim();
+    const value = field.type === "checkbox" ? field.checked : field.value.trim();
 
     field.setAttribute("aria-invalid", "false");
     if (error) error.textContent = "";
@@ -2649,6 +2751,13 @@ function handleLeadSubmission(event) {
     return;
   }
 
+  const turnstileToken = form.dataset.turnstileToken;
+  if (!turnstileToken) {
+    if (turnstileError) turnstileError.textContent = "Please complete the human verification.";
+    form.querySelector("[data-turnstile-widget]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
   const leadData = {
     project: "M Amaya @ Southbay City",
     name: form.fullName.value.trim(),
@@ -2660,16 +2769,61 @@ function handleLeadSubmission(event) {
     source: "Landing Page",
   };
 
+  const externalId = form.dataset.externalId
+    || (window.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  form.dataset.externalId = externalId;
+  form.dataset.submitting = "true";
   submitButton.disabled = true;
-  console.log("M Amaya lead submission:", leadData);
-  sendLeadEmail(leadData);
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Sending securely...";
 
-  window.setTimeout(() => {
+  try {
+    const response = await fetch(`${PROPERTYMART_API_BASE}/external/forms/${encodeURIComponent(PROPERTYMART_FORM_KEY)}/leads`, {
+      method: "POST",
+      headers: {
+        Accept: "application/vnd.propertymart.manage.v1+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        external_id: externalId,
+        name: leadData.name,
+        phone: leadData.phone,
+        phone_code: "+60",
+        remarks: `M Amaya enquiry. Layout: ${leadData.preferredLayout}. Purpose: ${leadData.buyingPurpose}. Viewing time: ${leadData.bestViewingTime}.`,
+        source_url: window.location.href,
+        project_ids: [PROPERTYMART_PROJECT_ID],
+        custom_fields: {
+          project: leadData.project,
+          preferred_layout: leadData.preferredLayout,
+          buying_purpose: leadData.buyingPurpose,
+          best_viewing_time: leadData.bestViewingTime,
+        },
+        consent: {
+          accepted: true,
+          text: CONSENT_TEXT,
+          version: CONSENT_VERSION,
+        },
+        turnstile_token: turnstileToken,
+        website: form.elements.website.value,
+      }),
+    });
+
+    const responsePayload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      let message = "We couldn't submit your request. Please try again.";
+      if (response.status === 422 && responsePayload.errors) {
+        message = Object.values(responsePayload.errors).flat().find(Boolean) || message;
+      } else if (response.status === 429) {
+        message = "Too many attempts. Please wait a moment and try again.";
+      }
+      throw new Error(message);
+    }
+
     trackMetaPixelEvent("Lead", {
       content_name: "M Amaya Lead Form",
     });
     form.reset();
-    submitButton.disabled = false;
+    delete form.dataset.externalId;
     whatsappSubmitLinks.forEach((link) => {
       const action = link.dataset.nextAction || "package";
       const message = WHATSAPP_SUBMIT_MESSAGES[action] || WHATSAPP_SUBMIT_MESSAGES.package;
@@ -2681,7 +2835,24 @@ function handleLeadSubmission(event) {
       successMessage.hidden = false;
       successMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
-  }, 450);
+  } catch (error) {
+    if (formError) {
+      formError.textContent = error instanceof Error
+        ? error.message
+        : "We couldn't submit your request. Please try again.";
+      formError.hidden = false;
+      formError.focus();
+    }
+  } finally {
+    const widgetId = TURNSTILE_WIDGETS.get(form);
+    if (widgetId !== undefined && window.turnstile) {
+      window.turnstile.reset(widgetId);
+    }
+    delete form.dataset.turnstileToken;
+    delete form.dataset.submitting;
+    submitButton.disabled = false;
+    submitButton.textContent = originalButtonText;
+  }
 }
 
 </script>
