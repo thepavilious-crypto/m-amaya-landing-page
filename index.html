@@ -515,6 +515,111 @@ h3 {
   background: #fff;
 }
 
+.route-proof-section {
+  padding: clamp(26px, 5vw, 54px) 0 clamp(68px, 8vw, 118px);
+  background: #fff;
+}
+
+.route-proof-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(320px, 1fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: #f7f4ee;
+  box-shadow: 0 24px 70px rgba(28, 25, 19, 0.1);
+}
+
+.route-proof-card h2 {
+  font-size: clamp(1.85rem, 3.5vw, 3.45rem);
+}
+
+.route-proof-card p {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+}
+
+.route-proof-card small {
+  color: rgba(110, 110, 115, 0.86);
+  font-weight: 800;
+}
+
+.route-map {
+  position: relative;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 22px;
+  background:
+    linear-gradient(26deg, transparent 0 28%, rgba(214, 182, 106, 0.28) 28% 30%, transparent 30% 100%),
+    linear-gradient(136deg, transparent 0 38%, rgba(0, 0, 0, 0.12) 38% 39.5%, transparent 39.5% 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+    linear-gradient(135deg, #dfe5df, #bfcbbd);
+  background-size: auto, auto, 52px 52px, 52px 52px, auto;
+}
+
+.route-map::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.route-line {
+  position: absolute;
+  left: 24%;
+  top: 53%;
+  width: 52%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--gold);
+  transform: rotate(-18deg);
+  box-shadow: 0 0 0 5px rgba(214, 182, 106, 0.18);
+}
+
+.route-map strong {
+  position: absolute;
+  left: 45%;
+  top: 38%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #080808;
+  background: var(--gold-light);
+  font-size: 0.86rem;
+  font-weight: 900;
+  transform: translateX(-50%);
+}
+
+.map-pin {
+  position: absolute;
+  z-index: 2;
+  display: inline-grid;
+  min-width: 92px;
+  padding: 10px 12px;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--white);
+  background: #111113;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.project-pin {
+  left: 11%;
+  bottom: 22%;
+}
+
+.fiz-pin {
+  right: 10%;
+  top: 21%;
+  background: #128c55;
+}
+
 .commute-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.8fr);
@@ -1210,6 +1315,19 @@ body.motion-enhanced .floating-stat {
   font-weight: 900;
 }
 
+.next-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.micro-trust {
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
 .faq-section {
   background: #fff;
 }
@@ -1333,6 +1451,7 @@ body.motion-enhanced .hero-cta {
   .split-head,
   .dark-chapter,
   .trust-grid,
+  .route-proof-card,
   .commute-grid,
   .location-grid,
   .lead-grid {
@@ -1486,9 +1605,29 @@ body.motion-enhanced .hero-cta {
   }
 
   .quick-lead-section,
+  .route-proof-section,
   .commute-section,
   .faq-section {
     padding-block: 56px;
+  }
+
+  .route-proof-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .route-map {
+    min-height: 240px;
+  }
+
+  .route-map strong {
+    left: 50%;
+    top: 42%;
+  }
+
+  .map-pin {
+    min-width: 86px;
+    font-size: 0.72rem;
   }
 
   .hero-specs,
@@ -1681,7 +1820,7 @@ body.motion-enhanced .hero-cta {
       <nav class="global-actions" aria-label="Primary actions">
         <a href="#facilities">Facilities</a>
         <a href="#layouts">Layouts</a>
-        <a href="#lead-form">Package</a>
+        <a href="#check-price">Package</a>
         <a class="pill-link" data-whatsapp-link href="https://wa.me/601056301916">WhatsApp</a>
       </nav>
     </header>
@@ -1694,7 +1833,7 @@ body.motion-enhanced .hero-cta {
         <a href="#facilities">Facilities</a>
         <a href="#layouts">Layouts</a>
         <a href="#location">Location</a>
-        <a class="buy-link" href="#lead-form">Register</a>
+        <a class="buy-link" href="#check-price">Check Price</a>
       </div>
     </nav>
 
@@ -1702,11 +1841,12 @@ body.motion-enhanced .hero-cta {
       <section class="hero-cinema" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="launch-label reveal">Penang Island freehold residence</p>
-          <h1 id="hero-title" class="reveal">Stay Near Bayan Lepas FIZ. Come Home Faster.</h1>
-          <p class="hero-line reveal">Seaview residences in Batu Maung, approximately 900m from Bayan Lepas FIZ and Penang Second Bridge.</p>
+          <h1 id="hero-title" class="reveal">Work Near Bayan Lepas FIZ? Come Home Faster.</h1>
+          <p class="hero-line reveal">Freehold seaview residences in Batu Maung, approximately 900m from Bayan Lepas FIZ and Penang Second Bridge.</p>
           <div class="hero-offer reveal" aria-label="Launch package highlight">
             <span>From <strong>RM1,820/month*</strong></span>
-            <span>Zero-downpayment package available</span>
+            <span>Zero-downpayment package available, subject to eligibility</span>
+            <span>Estimated for selected Type A package. Request the complete price and loan breakdown.</span>
           </div>
           <div class="hero-badges reveal" aria-label="Hero highlights">
             <span>Freehold</span>
@@ -1725,10 +1865,10 @@ body.motion-enhanced .hero-cta {
           </div>
         </div>
         <div class="hero-cta reveal">
-          <a class="primary-cta" href="#lead-form">Get Latest Package</a>
-          <a class="secondary-cta" data-whatsapp-link href="https://wa.me/601056301916">WhatsApp Almes</a>
+          <a class="primary-cta" href="#check-price">Get Type A Price Breakdown</a>
+          <a class="secondary-cta" data-whatsapp-link href="https://wa.me/601056301916">WhatsApp for Available Units</a>
         </div>
-        <p class="offer-note reveal">*Estimated instalment is subject to loan approval, financing terms and selected package.</p>
+        <p class="offer-note reveal">*Estimated instalment is subject to loan approval, financing terms, selected package and chosen unit.</p>
       </section>
 
       <section class="trust-strip" aria-label="Quick project trust facts">
@@ -1783,12 +1923,12 @@ body.motion-enhanced .hero-cta {
         </div>
       </section>
 
-      <section class="section quick-lead-section" aria-labelledby="quick-form-title">
+      <section class="section quick-lead-section" id="check-price" aria-labelledby="quick-form-title">
         <div class="container lead-grid compact-lead-grid">
           <div class="lead-copy reveal">
-            <p class="section-kicker">Latest package.</p>
-            <h2 id="quick-form-title">Get today's package &amp; available units.</h2>
-            <p>Receive the latest pricing, floor plans, view directions and private viewing slots from Almes.</p>
+            <p class="section-kicker">Price breakdown.</p>
+            <h2 id="quick-form-title">Check price &amp; available units.</h2>
+            <p>Receive the Type A price breakdown, floor plans and current unit list from Almes.</p>
             <div class="urgency-list" aria-label="Availability notes">
               <span>Latest launch package subject to availability</span>
               <span>Selected view directions are limited</span>
@@ -1807,19 +1947,6 @@ body.motion-enhanced .hero-cta {
               <span class="field-error" aria-live="polite"></span>
             </label>
             <label>
-              Preferred Layout
-              <select name="preferredLayout" required>
-                <option value="">Select layout</option>
-                <option>Type A - 721 sq.ft.</option>
-                <option>Type B - 990 sq.ft.</option>
-                <option>Type C - 1,211 sq.ft.</option>
-                <option>Type D - 1,432 sq.ft.</option>
-                <option>Type E - 1,335 sq.ft.</option>
-                <option>Not sure yet</option>
-              </select>
-              <span class="field-error" aria-live="polite"></span>
-            </label>
-            <label>
               Buying Purpose
               <select name="buyingPurpose" required>
                 <option value="">Select purpose</option>
@@ -1830,13 +1957,35 @@ body.motion-enhanced .hero-cta {
               </select>
               <span class="field-error" aria-live="polite"></span>
             </label>
-            <button class="primary-cta submit-btn" type="submit">Get Latest Package</button>
+            <button class="primary-cta submit-btn" type="submit">Send Me Price Breakdown</button>
+            <p class="micro-trust">No spam. Your details are used only for project updates and viewing arrangements. Response via WhatsApp within business hours.</p>
             <div class="form-success" role="status" aria-live="polite" hidden>
               <strong>Thank you. Your request has been received.</strong>
-              <span>For faster assistance, WhatsApp Almes now.</span>
-              <a data-whatsapp-submit-link href="https://wa.me/601056301916">Continue on WhatsApp</a>
+              <span>What would you like next?</span>
+              <div class="next-actions">
+                <a data-whatsapp-submit-link data-next-action="package" href="https://wa.me/601056301916">Send me the package</a>
+                <a data-whatsapp-submit-link data-next-action="loan" href="https://wa.me/601056301916">Check loan eligibility</a>
+                <a data-whatsapp-submit-link data-next-action="viewing" href="https://wa.me/601056301916">Book showroom viewing</a>
+              </div>
             </div>
           </form>
+        </div>
+      </section>
+
+      <section class="route-proof-section" aria-labelledby="route-proof-title">
+        <div class="container route-proof-card reveal">
+          <div>
+            <p class="section-kicker">900m commute proof.</p>
+            <h2 id="route-proof-title">M Amaya to Bayan Lepas FIZ</h2>
+            <p>Approx. 900m from the project to Bayan Lepas FIZ, with Penang Second Bridge access also approximately 900m away.</p>
+            <small>Travel time varies with traffic, route choice and daily conditions.</small>
+          </div>
+          <div class="route-map" aria-label="Route illustration from M Amaya to Bayan Lepas FIZ">
+            <span class="map-pin project-pin">M Amaya</span>
+            <span class="route-line"></span>
+            <strong>Approx. 900m</strong>
+            <span class="map-pin fiz-pin">Bayan Lepas FIZ</span>
+          </div>
         </div>
       </section>
 
@@ -1960,7 +2109,7 @@ body.motion-enhanced .hero-cta {
                 <h3>721 sq.ft.</h3>
                 <p>Couple / first home / investment</p>
                 <small>1 Bedroom + Study - 2 Bathrooms - 288 units</small>
-                <button class="layout-cta" type="button" data-layout-choice="Type A - 721 sq.ft.">Get Type A Package</button>
+                <button class="layout-cta" type="button" data-layout-choice="Type A - 721 sq.ft.">Get Type A Price</button>
               </div>
             </article>
             <article class="floor-card reveal">
@@ -1970,7 +2119,7 @@ body.motion-enhanced .hero-cta {
                 <h3>990 sq.ft.</h3>
                 <p>Small family</p>
                 <small>3 Bedrooms - 2 Bathrooms - 1 Balcony - 344 units</small>
-                <button class="layout-cta" type="button" data-layout-choice="Type B - 990 sq.ft.">Check Type B Availability</button>
+                <button class="layout-cta" type="button" data-layout-choice="Type B - 990 sq.ft.">Check Type B Units</button>
               </div>
             </article>
             <article class="floor-card reveal">
@@ -1980,7 +2129,7 @@ body.motion-enhanced .hero-cta {
                 <h3>1,211 sq.ft.</h3>
                 <p>Growing family</p>
                 <small>4 Bedrooms - 2 Bathrooms - 1 Balcony - 115 units</small>
-                <button class="layout-cta" type="button" data-layout-choice="Type C - 1,211 sq.ft.">Check Type C Availability</button>
+                <button class="layout-cta" type="button" data-layout-choice="Type C - 1,211 sq.ft.">Check Type C Units</button>
               </div>
             </article>
             <article class="floor-card reveal">
@@ -1990,7 +2139,7 @@ body.motion-enhanced .hero-cta {
                 <h3>1,432 sq.ft.</h3>
                 <p>Larger family / premium layout</p>
                 <small>4 Bedrooms - 3 Bathrooms - 1 Balcony - 58 units</small>
-                <button class="layout-cta" type="button" data-layout-choice="Type D - 1,432 sq.ft.">Check Type D Availability</button>
+                <button class="layout-cta" type="button" data-layout-choice="Type D - 1,432 sq.ft.">Check Type D Units</button>
               </div>
             </article>
             <article class="floor-card reveal">
@@ -2000,7 +2149,7 @@ body.motion-enhanced .hero-cta {
                 <h3>1,335 sq.ft.</h3>
                 <p>Family layout alternative</p>
                 <small>4 Bedrooms - 2 Bathrooms - 1 Balcony - 28 units</small>
-                <button class="layout-cta" type="button" data-layout-choice="Type E - 1,335 sq.ft.">Check Type E Availability</button>
+                <button class="layout-cta" type="button" data-layout-choice="Type E - 1,335 sq.ft.">Check Type E Units</button>
               </div>
             </article>
           </div>
@@ -2086,10 +2235,15 @@ body.motion-enhanced .hero-cta {
               <span class="field-error" aria-live="polite"></span>
             </label>
             <button class="primary-cta submit-btn" type="submit">Get Latest Package</button>
+            <p class="micro-trust">No spam. Your details are used only for project updates and viewing arrangements. Response via WhatsApp within business hours.</p>
             <div class="form-success" id="formSuccess" role="status" aria-live="polite" hidden>
               <strong>Thank you. Your request has been received.</strong>
-              <span>For faster assistance, WhatsApp Almes now.</span>
-              <a data-whatsapp-submit-link href="https://wa.me/601056301916">Continue on WhatsApp</a>
+              <span>What would you like next?</span>
+              <div class="next-actions">
+                <a data-whatsapp-submit-link data-next-action="package" href="https://wa.me/601056301916">Send me the package</a>
+                <a data-whatsapp-submit-link data-next-action="loan" href="https://wa.me/601056301916">Check loan eligibility</a>
+                <a data-whatsapp-submit-link data-next-action="viewing" href="https://wa.me/601056301916">Book showroom viewing</a>
+              </div>
             </div>
           </form>
         </div>
@@ -2103,12 +2257,8 @@ body.motion-enhanced .hero-cta {
           </div>
           <div class="faq-grid">
             <details class="reveal" open>
-              <summary>Is M Amaya freehold?</summary>
-              <p>Yes. The sales material positions M Amaya as a freehold service apartment development in Batu Maung, Penang.</p>
-            </details>
-            <details class="reveal">
-              <summary>What does RM1,820/month assume?</summary>
-              <p>It is an estimated instalment and depends on loan approval, financing terms, selected package and chosen unit.</p>
+              <summary>How is RM1,820/month calculated?</summary>
+              <p>It is an estimated instalment for a selected Type A package and depends on loan approval, financing terms, selected package and chosen unit.</p>
             </details>
             <details class="reveal">
               <summary>Is zero downpayment available to everyone?</summary>
@@ -2119,12 +2269,20 @@ body.motion-enhanced .hero-cta {
               <p>Selected stacks offer sea, city, garden, mountain or Southbay Plaza views. Request the latest view-direction and available-stack list.</p>
             </details>
             <details class="reveal">
-              <summary>Is it partially furnished?</summary>
+              <summary>Is the project freehold?</summary>
+              <p>Yes. The sales material positions M Amaya as a freehold service apartment development in Batu Maung, Penang.</p>
+            </details>
+            <details class="reveal">
+              <summary>What is included in the furnishing package?</summary>
               <p>Partially furnished options may be available under selected packages. Final inclusions should be checked against the latest official package.</p>
             </details>
             <details class="reveal">
               <summary>When is completion and maintenance?</summary>
               <p>The sales kit states expected completion in 2030 and maintenance at RM0.33 psf inclusive of sinking fund, subject to latest official confirmation.</p>
+            </details>
+            <details class="reveal">
+              <summary>Can I check loan eligibility before viewing?</summary>
+              <p>Yes. Basic eligibility checking can be arranged before a showroom appointment, subject to the required financial information and bank assessment.</p>
             </details>
           </div>
         </div>
@@ -2139,8 +2297,8 @@ body.motion-enhanced .hero-cta {
     </footer>
 
     <div class="mobile-cta" aria-label="Sticky mobile actions">
-      <a data-whatsapp-link href="https://wa.me/601056301916">WhatsApp Consultant</a>
-      <a href="#lead-form">Get Latest Package</a>
+      <a data-whatsapp-link href="https://wa.me/601056301916">WhatsApp</a>
+      <a href="#check-price">Check Price</a>
     </div>
 
     <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
@@ -2148,8 +2306,12 @@ body.motion-enhanced .hero-cta {
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
 const WHATSAPP_NUMBER = "601056301916";
-const WHATSAPP_MESSAGE = "Hi Almes , im interested on this Amaya @Southbay";
-const WHATSAPP_SUBMIT_MESSAGE = "Hi Almes, I've submitted the M Amaya form. Please send me the latest package and available units.";
+const WHATSAPP_MESSAGE = "Hi Almes, I'm interested in the Batu Maung residence near Bayan Lepas FIZ. Please send me the current price and available units.";
+const WHATSAPP_SUBMIT_MESSAGES = {
+  package: "Hi Almes, I've submitted the M Amaya form. Please send me the latest package and available units.",
+  loan: "Hi Almes, I've submitted the M Amaya form. Please help me check loan eligibility.",
+  viewing: "Hi Almes, I've submitted the M Amaya form. Please arrange a showroom viewing slot.",
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   wireWhatsAppLinks();
@@ -2313,7 +2475,7 @@ function handleLeadSubmission(event) {
   const form = event.target;
   const requiredFields = form.querySelectorAll("[required]");
   const successMessage = form.querySelector(".form-success");
-  const whatsappSubmitLink = form.querySelector("[data-whatsapp-submit-link]");
+  const whatsappSubmitLinks = form.querySelectorAll("[data-whatsapp-submit-link]");
   const submitButton = form.querySelector('button[type="submit"]');
   let isValid = true;
 
@@ -2349,7 +2511,7 @@ function handleLeadSubmission(event) {
     project: "M Amaya @ Southbay City",
     name: form.fullName.value.trim(),
     phone: form.phone.value.trim(),
-    preferredLayout: form.preferredLayout.value,
+    preferredLayout: form.preferredLayout?.value || "Not selected",
     buyingPurpose: form.buyingPurpose.value,
     submittedAt: new Date().toISOString(),
     source: "Landing Page",
@@ -2361,11 +2523,13 @@ function handleLeadSubmission(event) {
   window.setTimeout(() => {
     form.reset();
     submitButton.disabled = false;
-    if (whatsappSubmitLink) {
-      whatsappSubmitLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_SUBMIT_MESSAGE)}`;
-      whatsappSubmitLink.target = "_blank";
-      whatsappSubmitLink.rel = "noopener";
-    }
+    whatsappSubmitLinks.forEach((link) => {
+      const action = link.dataset.nextAction || "package";
+      const message = WHATSAPP_SUBMIT_MESSAGES[action] || WHATSAPP_SUBMIT_MESSAGES.package;
+      link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      link.target = "_blank";
+      link.rel = "noopener";
+    });
     if (successMessage) {
       successMessage.hidden = false;
       successMessage.scrollIntoView({ behavior: "smooth", block: "nearest" });
