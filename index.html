@@ -2494,8 +2494,13 @@ function trackMetaPixelLeadOnce(form, externalId) {
   if (form.dataset.metaLeadTracked === leadTrackingKey) return;
   form.dataset.metaLeadTracked = leadTrackingKey;
 
+  console.log("[Meta] Form submission confirmed");
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('track', 'Lead');
+    window.fbq('track', 'Lead', {
+      content_name: 'M Amaya Website Enquiry',
+      content_category: 'Property Lead'
+    });
+    console.log("[Meta] Lead event fired");
   }
 }
 
