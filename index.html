@@ -2489,6 +2489,16 @@ function trackMetaPixelEvent(eventName, params = {}) {
   window.fbq("track", eventName, params);
 }
 
+function trackMetaPixelLeadOnce(form, externalId) {
+  const leadTrackingKey = externalId || "submitted";
+  if (form.dataset.metaLeadTracked === leadTrackingKey) return;
+  form.dataset.metaLeadTracked = leadTrackingKey;
+
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', 'Lead');
+  }
+}
+
 function initializeTurnstile() {
   document.querySelectorAll("[data-turnstile-widget]").forEach((container) => {
     const form = container.closest("form");
@@ -2819,9 +2829,7 @@ async function handleLeadSubmission(event) {
       throw new Error(message);
     }
 
-    trackMetaPixelEvent("Lead", {
-      content_name: "M Amaya Lead Form",
-    });
+    trackMetaPixelLeadOnce(form, externalId);
     form.reset();
     delete form.dataset.externalId;
     whatsappSubmitLinks.forEach((link) => {
